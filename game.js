@@ -17,8 +17,8 @@ window.addEventListener('resize', resize);
 
 class Player {
       constructor() {
-            this.x = x;
-            this.y = y;
+            this.x = canvas.width * 0.10;
+            this.y = canvas.height * 0.8;
             this.mode = "archer";
             this.armour = null;
             this.helmet = null;
@@ -26,15 +26,57 @@ class Player {
       }
 
       draw() {
-
+            ctx.translate(this.x, this.y);
+            ctx.rotate(0);
+            ctx.fillStyle = "#000000";
+            ctx.beginPath();
+            // face
+            ctx.arc(0, -20, 15, 0, 2 * Math.PI);
+            // body
+            ctx.roundRect(-15, 0, 30, 52.5, 3);
+            ctx.fill();
+            // hands
+            ctx.beginPath();
+            ctx.fillStyle = "#CDDC39";
+            // bow hand
+            ctx.fillRect(0, 1, 65, 5);
+            ctx.arc(67, 3.5, 2.5, Math.PI * 3 / 2, Math.PI / 2);
+            ctx.fill();
+            // arrow hand
+            ctx.fillRect(-15, 0, 0, 0);
+            ctx.beginPath();
+            ctx.arc(100, 100, 15, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillRect(-15, 10, 65, 5);
+            // ctx.fillRect(0, 0, 1, canvas.height);
+            ctx.rotate(0);
+            ctx.translate(-this.x, -this.y);
       }
 }
 
+let plyr = new Player();
+
 function drawFrames() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.arc(canvas.width / 2, canvas.height / 2, 50, 0, 2 * Math.PI);
-      ctx.fill();
+      plyr.draw();
       requestAnimationFrame(drawFrames);
 }
 
 drawFrames();
+
+// let i = 0;
+// let a = (Math.PI / 100) * i;
+
+// setInterval(() => {
+//       i++;
+//       a = (Math.PI / 100) * i;
+// }, 25);
+
+// ctx.beginPath();
+// ctx.fillRect(150, 200, 70, 5);
+// ctx.translate(150, 200 + 5 / 2);
+// ctx.rotate(-a);
+// ctx.fillRect(0, -5 / 2, 70, 5);
+// ctx.rotate(a);
+// ctx.translate(-150, -200 - 5 / 2);
+// ctx.closePath();
