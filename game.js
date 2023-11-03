@@ -33,7 +33,7 @@ class Player {
             // face
             ctx.arc(0, -20, 15, 0, 2 * Math.PI);
             // body
-            ctx.roundRect(-15, 0, 30, 52.5, 3);
+            ctx.roundRect(-20, 0, 40, 70, 3);
             ctx.fill();
             // hands
             ctx.beginPath();
@@ -43,10 +43,13 @@ class Player {
             ctx.arc(67, 3.5, 2.5, Math.PI * 3 / 2, Math.PI / 2);
             ctx.fill();
             // arrow hand
-            ctx.fillRect(-15, 0, 0, 0);
-            ctx.beginPath();
-            ctx.arc(100, 100, 15, 0, Math.PI * 2);
+            ctx.translate(-19, 1 + 6 / 2);
+            ctx.rotate(0);
+            ctx.fillStyle = "#CDDC00";
+            ctx.roundRect(0, -5 / 2, 29.5, 6, 3);
             ctx.fill();
+            ctx.rotate(-0);
+            ctx.translate(19, -1 - 6 / 2);
             ctx.fillRect(-15, 10, 65, 5);
             // ctx.fillRect(0, 0, 1, canvas.height);
             ctx.rotate(0);
