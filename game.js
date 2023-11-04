@@ -1,5 +1,6 @@
 let canvas = document.getElementsByTagName("canvas")[0];
 let ctx = canvas.getContext("2d");
+let input = document.getElementById("angle");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight * 0.95;
@@ -39,23 +40,39 @@ class Player {
             ctx.beginPath();
             ctx.fillStyle = "#CDDC39";
             // bow hand
-            ctx.fillRect(0, 1, 65, 5);
-            ctx.arc(67, 3.5, 2.5, Math.PI * 3 / 2, Math.PI / 2);
+            ctx.fillRect(0, 1, 82, 6);
+            ctx.arc(84, 4, 3, Math.PI * 3 / 2, Math.PI / 2);
             ctx.fill();
             // arrow hand
-            ctx.translate(-19, 1 + 6 / 2);
+            ctx.translate(-17.5, 3); // its starting is (-19,0)
+            ctx.rotate(input.value * Math.PI / 180);
+            ctx.beginPath();
+            ctx.fillStyle = "#CeeCf0";
+            ctx.fillStyle = "#000";
+            ctx.roundRect(-3 / 2, -3, 29.5, 6, 3);
+            ctx.fill();
+            ctx.stroke();
+            ctx.rotate(-input.value * Math.PI / 180);
+            ctx.translate(17.5, -3);
+
+            ctx.translate(-19, 3); // its starting is (-19,0)
             ctx.rotate(0);
-            ctx.fillStyle = "#CDDC00";
-            ctx.roundRect(0, -5 / 2, 29.5, 6, 3);
+            ctx.beginPath();
+            ctx.fillStyle = "#000";
+            ctx.roundRect(29.5 * Math.cos(input.value * Math.PI / 180), 29.5 * Math.sin(input.value * Math.PI / 180) - 3, 62, 6, 3);
+            ctx.arc(29.5 * Math.cos(input.value * Math.PI / 180), 29.5 * Math.sin(input.value * Math.PI / 180), 3.5, 0, Math.PI * 2);
             ctx.fill();
             ctx.rotate(-0);
-            ctx.translate(19, -1 - 6 / 2);
-            ctx.fillRect(-15, 10, 65, 5);
-            // ctx.fillRect(0, 0, 1, canvas.height);
+            ctx.translate(19, -3);
+            // ctx.fillRect(-19, 0, 1, canvas.height);
+            // ctx.fillRect(-19, 0, canvas.width, 1);
             ctx.rotate(0);
             ctx.translate(-this.x, -this.y);
       }
 }
+
+let i = 0;
+let a = (Math.PI / 100) * i;
 
 let plyr = new Player();
 
@@ -67,13 +84,10 @@ function drawFrames() {
 
 drawFrames();
 
-// let i = 0;
-// let a = (Math.PI / 100) * i;
-
-// setInterval(() => {
-//       i++;
-//       a = (Math.PI / 100) * i;
-// }, 25);
+setInterval(() => {
+      i++;
+      a = (Math.PI / 100) * i;
+}, 25);
 
 // ctx.beginPath();
 // ctx.fillRect(150, 200, 70, 5);
