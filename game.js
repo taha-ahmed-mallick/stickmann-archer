@@ -24,9 +24,11 @@ class Player {
             this.armour = null;
             this.helmet = null;
             this.health = 100;
+            this.angle = (180 - input.value) * Math.PI / 180;
       }
 
       draw() {
+            this.angle = (180 - input.value) * Math.PI / 180;
             ctx.translate(this.x, this.y);
             ctx.rotate(0);
             ctx.fillStyle = "#000000";
@@ -45,23 +47,18 @@ class Player {
             ctx.fill();
             // arrow hand
             ctx.translate(-17.5, 3); // its starting is (-19,0)
-            ctx.rotate(input.value * Math.PI / 180);
-            ctx.beginPath();
-            ctx.fillStyle = "#CeeCf0";
+            ctx.rotate(this.angle);
             ctx.fillStyle = "#000";
-            ctx.roundRect(-3 / 2, -3, 29.5, 6, 3);
-            ctx.fill();
-            ctx.stroke();
-            ctx.rotate(-input.value * Math.PI / 180);
+            ctx.fillRect(-3 / 2, -3, 29.5, 6);
+            ctx.rotate(-this.angle);
             ctx.translate(17.5, -3);
 
             ctx.translate(-19, 3); // its starting is (-19,0)
             ctx.rotate(0);
             ctx.beginPath();
-            ctx.fillStyle = "#000";
-            ctx.roundRect(29.5 * Math.cos(input.value * Math.PI / 180), 29.5 * Math.sin(input.value * Math.PI / 180) - 3, 62, 6, 3);
-            ctx.arc(29.5 * Math.cos(input.value * Math.PI / 180), 29.5 * Math.sin(input.value * Math.PI / 180), 3.5, 0, Math.PI * 2);
+            ctx.arc(29.5 * Math.cos(this.angle) + 2, 29.5 * Math.sin(this.angle), 3, 0, Math.PI * 2);
             ctx.fill();
+            ctx.fillRect(29.5 * Math.cos(this.angle), 29.5 * Math.sin(this.angle) - 3, 62, 6, 3);
             ctx.rotate(-0);
             ctx.translate(19, -3);
             // ctx.fillRect(-19, 0, 1, canvas.height);
@@ -94,6 +91,8 @@ setInterval(() => {
 // ctx.translate(150, 200 + 5 / 2);
 // ctx.rotate(-a);
 // ctx.fillRect(0, -5 / 2, 70, 5);
+// ctx.arc(0, 0, 5 / 2, 0, Math.PI * 2);
+// ctx.fill();
 // ctx.rotate(a);
 // ctx.translate(-150, -200 - 5 / 2);
 // ctx.closePath();
