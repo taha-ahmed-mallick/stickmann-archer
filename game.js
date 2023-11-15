@@ -53,16 +53,17 @@ class Player {
             ctx.rotate(-this.angle);
             ctx.translate(17.5, -3);
 
-            ctx.translate(-19, 3); // its starting is (-19,0)
-            ctx.rotate(0);
+            ctx.translate(-19 + 29.5 * Math.cos(this.angle), 3 + 29.5 * Math.sin(this.angle)); // its starting is (-19,0)
+            ctx.rotate(Math.asin((- 29.5 * Math.sin(this.angle)) / 62));
             ctx.beginPath();
-            ctx.arc(29.5 * Math.cos(this.angle) + 2, 29.5 * Math.sin(this.angle), 3, 0, Math.PI * 2);
+            ctx.fillStyle = "#fff";
+            ctx.arc(2, 0, 3, 0, Math.PI * 2);
             ctx.fill();
-            ctx.fillRect(29.5 * Math.cos(this.angle), 29.5 * Math.sin(this.angle) - 3, 62, 6, 3);
-            ctx.rotate(-0);
-            ctx.translate(19, -3);
-            // ctx.fillRect(-19, 0, 1, canvas.height);
-            // ctx.fillRect(-19, 0, canvas.width, 1);
+            ctx.fillRect(0, -3, 62, 6, 3);
+            ctx.rotate(-Math.asin((- 29.5 * Math.sin(this.angle)) / 62));
+            ctx.translate(19 - 29.5 * Math.cos(this.angle), -3 - 29.5 * Math.sin(this.angle));
+            // ctx.fillStyle = "#f00";
+            // ctx.fillRect(-this.x, 0, canvas.width, 1);
             ctx.rotate(0);
             ctx.translate(-this.x, -this.y);
       }
