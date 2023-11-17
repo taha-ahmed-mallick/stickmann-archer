@@ -16,6 +16,9 @@ function resize(event = true) {
 resize(false);
 window.addEventListener('resize', resize);
 
+let bow = new Image();
+bow.src = "./imgs/bow-1.png";
+
 class Player {
       constructor() {
             this.x = canvas.width * 0.10;
@@ -45,6 +48,7 @@ class Player {
             ctx.fillRect(0, 1, 82, 6);
             ctx.arc(84, 4, 3, Math.PI * 3 / 2, Math.PI / 2);
             ctx.fill();
+            // ctx.drawImage(bow, 50, -50);
             // arrow hand
             ctx.translate(-17.5, 3); // its starting is (-19,0)
             ctx.rotate(this.angle);
@@ -56,10 +60,19 @@ class Player {
             ctx.translate(-19 + 29.5 * Math.cos(this.angle), 3 + 29.5 * Math.sin(this.angle)); // its starting is (-19,0)
             ctx.rotate(Math.asin((- 29.5 * Math.sin(this.angle)) / 62));
             ctx.beginPath();
-            ctx.fillStyle = "#fff";
             ctx.arc(2, 0, 3, 0, Math.PI * 2);
             ctx.fill();
             ctx.fillRect(0, -3, 62, 6, 3);
+
+            ctx.translate(62, 0);
+            ctx.rotate(Math.PI + Math.PI / 4);
+            ctx.beginPath();
+            ctx.fillStyle = "#f0f";
+            ctx.arc(0, 0, 3, Math.PI * 0, Math.PI * 3 / 2);
+            ctx.fill();
+            ctx.rotate(-Math.PI - Math.PI / 4);
+            ctx.translate(-62, 0);
+
             ctx.rotate(-Math.asin((- 29.5 * Math.sin(this.angle)) / 62));
             ctx.translate(19 - 29.5 * Math.cos(this.angle), -3 - 29.5 * Math.sin(this.angle));
             // ctx.fillStyle = "#f00";
