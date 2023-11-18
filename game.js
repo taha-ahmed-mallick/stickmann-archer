@@ -41,14 +41,25 @@ class Player {
             // body
             ctx.roundRect(-20, 0, 40, 70, 3);
             ctx.fill();
+            ctx.rotate(0);
+            ctx.translate(-this.x, -this.y);
+      }
+
+      archer() {
+            ctx.translate(this.x, this.y);
+            ctx.rotate(0);
             // hands
             ctx.beginPath();
             ctx.fillStyle = "#CDDC39";
             // bow hand
             ctx.fillRect(0, 1, 82, 6);
-            ctx.arc(84, 4, 3, Math.PI * 3 / 2, Math.PI / 2);
+            ctx.translate(86, 4);
+            ctx.rotate(Math.PI*5/4);
+            ctx.arc(0, 0, 4, 0, Math.PI*3 / 2);
+            ctx.rotate(-Math.PI*5/4);
+            ctx.translate(-86, -4);
             ctx.fill();
-            // ctx.drawImage(bow, 50, -50);
+            ctx.drawImage(bow, 50, -50,0, 0);
             // arrow hand
             ctx.translate(-17.5, 3); // its starting is (-19,0)
             ctx.rotate(this.angle);
@@ -64,14 +75,14 @@ class Player {
             ctx.fill();
             ctx.fillRect(0, -3, 62, 6, 3);
 
-            ctx.translate(62, 0);
-            ctx.rotate(Math.PI + Math.PI / 4);
+            ctx.translate(66, 0);
+            ctx.rotate(Math.PI*5 / 4);
             ctx.beginPath();
             ctx.fillStyle = "#f0f";
-            ctx.arc(0, 0, 3, Math.PI * 0, Math.PI * 3 / 2);
+            ctx.arc(0, 0, 4,0, Math.PI * 3 / 2);
             ctx.fill();
-            ctx.rotate(-Math.PI - Math.PI / 4);
-            ctx.translate(-62, 0);
+            ctx.rotate(-Math.PI *5/ 4);
+            ctx.translate(-66, 0);
 
             ctx.rotate(-Math.asin((- 29.5 * Math.sin(this.angle)) / 62));
             ctx.translate(19 - 29.5 * Math.cos(this.angle), -3 - 29.5 * Math.sin(this.angle));
@@ -90,6 +101,7 @@ let plyr = new Player();
 function drawFrames() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       plyr.draw();
+      plyr.archer();
       requestAnimationFrame(drawFrames);
 }
 
