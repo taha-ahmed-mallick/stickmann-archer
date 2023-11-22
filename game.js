@@ -47,7 +47,7 @@ class Player {
 		this.helmet = null;
 		this.health = 100;
 		this.angle = ((180 - input.value) * Math.PI) / 180;
-		this.ratio = [-20, 15, 40, 70, 82, 6, 4, 29.5, 53];
+		this.ratio = [-20, 15, 40, 70, 82, 6, 4, 4, 29.5, 53];
 	}
 
 	draw() {
@@ -62,35 +62,10 @@ class Player {
 		ctx.roundRect(-20, 0, 40, 70, 3);
 		ctx.fill();
 
-		ctx.beginPath();
-		ctx.fillStyle = "#fe3b36"; //red
-		ctx.roundRect(-1.5, 0, 3, -20, 100);
-		ctx.fill();
-
-		ctx.beginPath();
-		ctx.fillStyle = "#008ced"; //blue
-		ctx.roundRect(0, -20 - 1.5, 15, 3, 100);
-		ctx.fill();
-
-		ctx.beginPath();
-		// ctx.fillStyle = "#7abb4a"; //green
 		ctx.fillStyle = "#ffd242"; //yellow
-		ctx.roundRect(25, 0, 3, 70, 100);
-		ctx.fill();
-
-		ctx.beginPath();
-		ctx.fillStyle = "#9724a3"; //purple
-		ctx.roundRect(-20, 75, 40, 3, 100);
-		ctx.fill();
-
 		ctx.fillStyle = "#fe3b36"; //red
-		ctx.fillText("[0]", -20, 90);
 		ctx.fillStyle = "#008ced"; //blue
-		ctx.fillText("[1]", -5, 90);
 		ctx.fillStyle = "#9724a3"; //purple
-		ctx.fillText("[2]", 10, 90);
-		ctx.fillStyle = "#ffd242"; //yellow
-		ctx.fillText("[3]", 25, 90);
 
 		ctx.rotate(0);
 		ctx.translate(-this.x, -this.y);
@@ -158,9 +133,8 @@ let plyr = new Player();
 
 function drawFrames() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.setTransform(3, 0, 0, 3, -100, -1500);
 	plyr.draw();
-	// plyr.archer();
+	plyr.archer();
 	requestAnimationFrame(drawFrames);
 }
 

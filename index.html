@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Stickman Archer</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stickman Archer</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-    <div class="intro screen"></div>
-    <div class="start screen hidden">
-        <div class="top-info"></div>
-        <div class="character-info"></div>
-        <div class="btns">
-            <div class="campaign btn">Campaign</div>
-            <div class="endless btn">Endless</div>
-            <div class="shop btn">Shop</div>
-        </div>
-    </div>
-    <div class="levels screen hidden"></div>
-    <div class="game screen hidden">
-        <div class="top-info"></div>
-        <canvas id="game"></canvas>
-        <input type="range" id="angle" value="40" step="1" min="0" max="180">
-    </div>
-    <script src="./main.js"></script>
-    <script src="./game.js"></script>
-</body>
-
+	<body>
+		<div class="intro screen"></div>
+		<div class="start screen hidden">
+			<div class="top-info"></div>
+			<div class="character-info"></div>
+			<div class="btns">
+				<div class="campaign btn">Campaign</div>
+				<div class="endless btn">Endless</div>
+				<div class="shop btn">Shop</div>
+			</div>
+		</div>
+		<div class="levels screen hidden"></div>
+		<div class="game screen hidden">
+			<div class="top-info"></div>
+			<canvas id="game"></canvas>
+			<input
+				type="range"
+				id="angle"
+				value="105"
+				step="1"
+				min="0"
+				max="180"
+			/>
+		</div>
+		<script src="./main.js"></script>
+		<script src="./game.js"></script>
+	</body>
 </html>
