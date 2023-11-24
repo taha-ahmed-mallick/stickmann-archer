@@ -1,6 +1,9 @@
 let canvas = document.getElementsByTagName("canvas")[0];
 let ctx = canvas.getContext("2d");
 let input = document.getElementById("angle");
+let multiplier = document.getElementById("multiplier");
+
+multiplier.onmousemove = () => plyr.multiply(multiplier.value);
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight * 0.95;
@@ -47,7 +50,16 @@ class Player {
 		this.helmet = null;
 		this.health = 100;
 		this.angle = ((180 - input.value) * Math.PI) / 180;
-		this.ratio = [-20, 15, 40, 70, 82, 6, 4, 4, 29.5, 53];
+		this.ratio = [-20, 15, 40, 70, 82, 6, 4, 3, 29.5, 53];
+		this.multiplier = 1;
+	}
+
+	multiply(newMultiplier) {
+		for (let i = 0; i < this.ratio.length; i++)
+			this.ratio[i] /= this.multiplier;
+		this.multiplier = newMultiplier;
+		for (let i = 0; i < this.ratio.length; i++)
+			this.ratio[i] *= this.multiplier;
 	}
 
 	draw() {
@@ -57,9 +69,9 @@ class Player {
 		ctx.fillStyle = "#000000";
 		ctx.beginPath();
 		// face
-		ctx.arc(0, -20, 15, 0, 2 * Math.PI);
+		ctx.arc(0, this.ratio[0], this.ratio[1], 0, 2 * Math.PI);
 		// body
-		ctx.roundRect(-20, 0, 40, 70, 3);
+		ctx.roundRect(-this.ratio[2] / 2, 0, this.ratio[2], this.ratio[3], 3);
 		ctx.fill();
 
 		ctx.fillStyle = "#ffd242"; //yellow
@@ -78,49 +90,52 @@ class Player {
 		ctx.beginPath();
 		ctx.fillStyle = "#CDDC39";
 		// bow hand
-		ctx.fillRect(0, 1, 82, 6);
-		ctx.translate(86, 4);
+		ctx.fillRect(0, 1, this.ratio[4], this.ratio[5]);
+		ctx.translate(this.ratio[6] + this.ratio[4], this.ratio[7] + 1);
 		ctx.rotate((Math.PI * 5) / 4);
-		ctx.arc(0, 0, 4, 0, (Math.PI * 3) / 2);
+		ctx.arc(0, 0, this.ratio[6], 0, (Math.PI * 3) / 2);
 		ctx.rotate((-Math.PI * 5) / 4);
 		ctx.fill();
-		ctx.translate(-86, -4);
+		ctx.translate(-this.ratio[6] - this.ratio[4], -this.ratio[7] - 1);
 
-		ctx.drawImage(bows[0].img, 62, -50 + 5, 98 * bows[0].aspectRatio, 98);
+		// ctx.drawImage(bows[0].img, 62, -50 + 5, 98 * bows[0].aspectRatio, 98);
 		// arrow hand
-		ctx.translate(-17.5, 3); // its starting is (-19,0)
+		ctx.translate(-17.5, this.ratio[5] / 2); // its starting is (-19,0)
 		ctx.rotate(this.angle);
+		ctx.fillStyle = "#f00";
+		ctx.fillRect(0, -this.ratio[5] / 2, this.ratio[8], this.ratio[5]);
 		ctx.fillStyle = "#000";
-		ctx.fillRect(-3 / 2, -3, 29.5, 6);
 		ctx.rotate(-this.angle);
-		ctx.translate(17.5, -3);
+		ctx.translate(17.5, -this.ratio[5] / 2);
 
 		ctx.translate(
-			-19 + 29.5 * Math.cos(this.angle),
-			3 + 29.5 * Math.sin(this.angle)
+			-17.5 + this.ratio[8] * Math.cos(this.angle),
+			this.ratio[5] / 2 + this.ratio[8] * Math.sin(this.angle)
 		); // its starting is (-19,0)
-		ctx.rotate(Math.asin((-29.5 * Math.sin(this.angle)) / 53));
+		ctx.rotate(
+			Math.asin((-this.ratio[8] * Math.sin(this.angle)) / this.ratio[9])
+		);
+		ctx.fillRect(0, -this.ratio[5] / 2, this.ratio[9], this.ratio[5]);
 		ctx.beginPath();
-		ctx.arc(2, 0, 3, 0, Math.PI * 2);
+		ctx.arc(0, 0, this.ratio[5] / 2, 0, Math.PI * 2);
 		ctx.fill();
-		ctx.fillRect(0, -3, 53, 6);
 
-		ctx.translate(57, 0);
+		ctx.translate(this.ratio[9] + this.ratio[6], 0);
 		ctx.rotate((Math.PI * 5) / 4);
 		ctx.beginPath();
 		ctx.fillStyle = "#f0f";
-		ctx.arc(0, 0, 4, 0, (Math.PI * 3) / 2);
+		ctx.arc(0, 0, this.ratio[6], 0, (Math.PI * 3) / 2);
 		ctx.fill();
 		ctx.rotate((-Math.PI * 5) / 4);
-		ctx.translate(-57, 0);
+		ctx.translate(-this.ratio[9] - this.ratio[6], 0);
 
-		ctx.rotate(-Math.asin((-29.5 * Math.sin(this.angle)) / 53));
-		ctx.translate(
-			19 - 29.5 * Math.cos(this.angle),
-			-3 - 29.5 * Math.sin(this.angle)
+		ctx.rotate(
+			-Math.asin((-this.ratio[8] * Math.sin(this.angle)) / this.ratio[9])
 		);
-		// ctx.fillStyle = "#f00";
-		// ctx.fillRect(-this.x, -50, canvas.width, 1);
+		ctx.translate(
+			17.5 - this.ratio[8] * Math.cos(this.angle),
+			-this.ratio[5] / 2 - this.ratio[8] * Math.sin(this.angle)
+		);
 		ctx.rotate(0);
 		ctx.translate(-this.x, -this.y);
 	}
@@ -133,6 +148,7 @@ let plyr = new Player();
 
 function drawFrames() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	// ctx.setTransform(2, 0, 0, 2, 200, -700);
 	plyr.draw();
 	plyr.archer();
 	requestAnimationFrame(drawFrames);
