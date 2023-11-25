@@ -62,7 +62,7 @@ class Player {
 			this.ratio[i] *= this.multiplier;
 	}
 
-	draw() {
+	drawBody() {
 		this.angle = ((180 - input.value) * Math.PI) / 180;
 		ctx.translate(this.x, this.y);
 		ctx.rotate(0);
@@ -100,16 +100,16 @@ class Player {
 
 		// ctx.drawImage(bows[0].img, 62, -50 + 5, 98 * bows[0].aspectRatio, 98);
 		// arrow hand
-		ctx.translate(-17.5, this.ratio[5] / 2); // its starting is (-19,0)
+		ctx.translate(-(this.ratio[2] - this.ratio[5]) / 2, this.ratio[5] / 2); // its starting is (-19,0)
 		ctx.rotate(this.angle);
-		ctx.fillStyle = "#f00";
-		ctx.fillRect(0, -this.ratio[5] / 2, this.ratio[8], this.ratio[5]);
 		ctx.fillStyle = "#000";
+		ctx.fillRect(0, -this.ratio[5] / 2, this.ratio[8], this.ratio[5]);
 		ctx.rotate(-this.angle);
-		ctx.translate(17.5, -this.ratio[5] / 2);
+		ctx.translate((this.ratio[2] - this.ratio[5]) / 2, -this.ratio[5] / 2);
 
 		ctx.translate(
-			-17.5 + this.ratio[8] * Math.cos(this.angle),
+			-(this.ratio[2] - this.ratio[5]) / 2 +
+				this.ratio[8] * Math.cos(this.angle),
 			this.ratio[5] / 2 + this.ratio[8] * Math.sin(this.angle)
 		); // its starting is (-19,0)
 		ctx.rotate(
@@ -123,7 +123,6 @@ class Player {
 		ctx.translate(this.ratio[9] + this.ratio[6], 0);
 		ctx.rotate((Math.PI * 5) / 4);
 		ctx.beginPath();
-		ctx.fillStyle = "#f0f";
 		ctx.arc(0, 0, this.ratio[6], 0, (Math.PI * 3) / 2);
 		ctx.fill();
 		ctx.rotate((-Math.PI * 5) / 4);
@@ -133,7 +132,8 @@ class Player {
 			-Math.asin((-this.ratio[8] * Math.sin(this.angle)) / this.ratio[9])
 		);
 		ctx.translate(
-			17.5 - this.ratio[8] * Math.cos(this.angle),
+			(this.ratio[2] - this.ratio[5]) / 2 -
+				this.ratio[8] * Math.cos(this.angle),
 			-this.ratio[5] / 2 - this.ratio[8] * Math.sin(this.angle)
 		);
 		ctx.rotate(0);
@@ -149,7 +149,7 @@ let plyr = new Player();
 function drawFrames() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	// ctx.setTransform(2, 0, 0, 2, 200, -700);
-	plyr.draw();
+	plyr.drawBody();
 	plyr.archer();
 	requestAnimationFrame(drawFrames);
 }
